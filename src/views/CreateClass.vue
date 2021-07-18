@@ -14,7 +14,7 @@
               <v-text-field
                 v-model="teacher"
                 :rules="teacherRules"
-                label="Professor"
+                label="Professor responsável"
                 required
               ></v-text-field>
               <v-row class="my-3 mx-1">

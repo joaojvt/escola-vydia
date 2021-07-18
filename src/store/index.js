@@ -53,6 +53,22 @@ export default new Vuex.Store({
         name: 'Ed. Física',
         teacher: 'Suzana'
       }
+    ],
+    exams: [
+      {
+        id: 1,
+        grade: 9,
+        student: {
+          id: 1,
+          name: "João Vitor da Silva",
+          email: "joao@email.com",
+        },
+        class: {
+          id: 1,
+          name: 'Matemática',
+          teacher: 'Maria Clara'
+        },
+      }
     ]
   },
   mutations: {
@@ -85,9 +101,21 @@ export default new Vuex.Store({
       const classIndex = state.classes.indexOf(classe)
       state.classes.splice(classIndex, 1)
     },
+
+    addExam(state, { exam }) {
+      exam.id = state.exams.length + 1
+      state.exams.push(exam)
+    },
+    editExam(state, { newExam }) {
+      const index = state.exams.findIndex(exams => exams.id === newExam.id)
+      if (index !== -1) {
+        state.exams[index] = newExam
+      }
+    },
   },
-  getters:{
+  getters: {
     getStudentById: state => id => state.students.find(student => student.id === id),
-    getClassById: state => id => state.classes.find(classe => classe.id === id)
+    getClassById: state => id => state.classes.find(classe => classe.id === id),
+    getExamById: state => id => state.exams.find(exam => exam.id === id),
   }
 })

@@ -80,7 +80,6 @@ export default {
   data: () => ({
     search: "",
     dialogDelete: false,
-    dialogEdit: false,
     headers: [
       { text: "Matricula", value: "id" },
       { text: "Nome", value: "name" },

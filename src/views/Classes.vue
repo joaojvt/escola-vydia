@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>
         <router-link to="/create-class">
-          <v-btn color="teal" dark> Novo </v-btn>
+          <v-btn color="teal" dark> Nova </v-btn>
         </router-link>
 
         <v-spacer></v-spacer>
@@ -56,7 +56,7 @@
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
         <v-card-title class="text-h5"
-          >Tem certeza que quer apagar esse aluno?</v-card-title
+          >Tem certeza que quer apagar essa matéris?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

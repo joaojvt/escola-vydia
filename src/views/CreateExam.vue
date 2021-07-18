@@ -5,16 +5,29 @@
         <v-card>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
-              <v-text-field
-                v-model="name"
-                label="Nome"
-                :rules="nameRules"
+              <v-select
+                v-model="student"
+                :items="students"
+                :rules="studentRules"
+                label="Aluno"
+                item-text="name"
+                item-value="id"
                 required
-              ></v-text-field>
+              ></v-select>
+              <v-select
+                v-model="classe"
+                :items="classes"
+                :rules="classRules"
+                label="Matérias"
+                item-text="name"
+                item-value="id"
+                required
+              ></v-select>
+
               <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="Email"
+                v-model="grade"
+                :rules="gradeRules"
+                label="Nota"
                 required
               ></v-text-field>
               <v-row class="my-3 mx-1">
@@ -23,7 +36,7 @@
                   color="success"
                   class="mr-4"
                   elevation="0"
-                  @click="createStudent"
+                  @click="createExam"
                 >
                   Gravar
                 </v-btn>
@@ -39,7 +52,7 @@
 
                 <v-spacer></v-spacer>
 
-                <router-link to="/students">
+                <router-link to="/exams">
                   <v-btn elevation="0" dark color="teal">Voltar</v-btn>
                 </router-link>
               </v-row>
@@ -56,36 +69,45 @@ export default {
   name: "create-student",
   data: () => ({
     valid: false,
-    name: "",
-    nameRules: [
+    grade: null,
+    gradeRules: [
       (value) => !!value || "Obrigatório.",
-      (value) => (value && value.length >= 3) || "Min 3 caracteres",
+      (value) => (value && value >= 0 && value <= 10) || "Digite um número de 0 a 10",
     ],
-    email: "",
-    emailRules: [
+    classe: null,
+    classRules: [
       (value) => !!value || "Obrigatório.",
-      (value) =>
-        /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]+)$/i.test(value) ||
-        "Email inválido",
+    ],
+    student: {},
+    studentRules: [
+      (value) => !!value || "Obrigatório.",
     ],
   }),
   methods: {
-    createStudent() {
+    createExam() {
       this.$refs.form.validate();
-
       if (!this.valid) return;
 
-      const student = {
-        name: this.name,
-        email: this.email,
+      const exam = {
+        grade: this.grade,
+        student: this.students.find(student => this.student === student.id),
+        class: this.classes.find(classe => this.classe === classe.id),
       };
 
-      this.$store.commit("addStudent", { student });
+      this.$store.commit("addExam", { exam });
       this.$refs.form.reset();
-      this.$router.push("/students");
+      this.$router.push("/exams");
     },
     reset() {
       this.$refs.form.reset();
+    },
+  },
+  computed: {
+    students() {
+      return this.$store.state.students;
+    },
+    classes() {
+      return this.$store.state.classes;
     },
   },
 };

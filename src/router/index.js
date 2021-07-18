@@ -8,6 +8,8 @@ import Classes from '@/views/Classes.vue'
 import CreateClass from '@/views/CreateClass.vue'
 import EditClass from '@/views/EditClass.vue'
 import Exams from '@/views/Exams.vue'
+import CreateExam from '@/views/CreateExam.vue'
+import EditExam from '@/views/EditExam.vue'
 
 Vue.use(VueRouter)
 
@@ -51,6 +53,16 @@ const routes = [
     path: '/exams',
     name: 'Provas',
     component: Exams
+  },
+  {
+    path: '/create-exam',
+    name: 'Criar Prova',
+    component: CreateExam
+  },
+  {
+    path: '/edit-exam/:id',
+    name: 'Editar Prova',
+    component: EditExam
   },
 ]
 

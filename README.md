@@ -1,24 +1,12 @@
 # escola-vydia
 
-## Project setup
+### Instruções para rodar o projeto localmente
 ```
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
-
-### Compiles and minifies for production
+### Criar build do projeto
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
