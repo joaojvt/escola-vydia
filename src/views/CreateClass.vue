@@ -12,9 +12,9 @@
                 required
               ></v-text-field>
               <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="Email"
+                v-model="teacher"
+                :rules="teacherRules"
+                label="Professor"
                 required
               ></v-text-field>
               <v-row class="my-3 mx-1">
@@ -23,7 +23,7 @@
                   color="success"
                   class="mr-4"
                   elevation="0"
-                  @click="createStudent"
+                  @click="createClass"
                 >
                   Gravar
                 </v-btn>
@@ -34,12 +34,12 @@
                   color="indigo"
                   dark
                 >
-                  limpar
+                  Limpar
                 </v-btn>
 
                 <v-spacer></v-spacer>
 
-                <router-link to="/students">
+                <router-link to="/classes">
                   <v-btn elevation="0" dark color="teal">Voltar</v-btn>
                 </router-link>
               </v-row>
@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "create-student",
+  name: "create-class",
   data: () => ({
     valid: false,
     name: "",
@@ -61,29 +61,27 @@ export default {
       (value) => !!value || "Obrigatório.",
       (value) => (value && value.length >= 3) || "Min 3 caracteres",
     ],
-    email: "",
-    emailRules: [
+    teacher: "",
+    teacherRules: [
       (value) => !!value || "Obrigatório.",
-      (value) =>
-        /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]+)$/i.test(value) ||
-        "Email inválido",
+      (value) => (value && value.length >= 3) || "Min 3 caracteres",
     ],
   }),
   methods: {
-    createStudent(event) {
+    createClass(event) {
       event.preventDefault;
       this.$refs.form.validate();
 
       if (!this.valid) return;
 
-      const student = {
+      const classe = {
         name: this.name,
-        email: this.email,
+        teacher: this.teacher,
       };
 
-      this.$store.commit("addStudent", { student });
+      this.$store.commit("addClass", { classe });
       this.$refs.form.reset();
-      this.$router.push("/students");
+      this.$router.push("/classes");
     },
     reset() {
       this.$refs.form.reset();
@@ -91,6 +89,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Student from '@/views/Student.vue'
 import CreateStudent from '@/views/CreateStudent.vue'
+import EditStudent from '@/views/EditStudent.vue'
 import Classes from '@/views/Classes.vue'
+import CreateClass from '@/views/CreateClass.vue'
+import EditClass from '@/views/EditClass.vue'
 import Exams from '@/views/Exams.vue'
 
 Vue.use(VueRouter)
@@ -25,9 +28,24 @@ const routes = [
     component: CreateStudent
   },
   {
+    path: '/edit-student/:id',
+    name: 'Editar aluno',
+    component: EditStudent
+  },
+  {
     path: '/classes',
     name: 'Matérias',
     component: Classes
+  },
+  {
+    path: '/create-class',
+    name: 'Criar matéria',
+    component: CreateClass
+  },
+  {
+    path: '/edit-class/:id',
+    name: 'Editar matéria',
+    component: EditClass
   },
   {
     path: '/exams',

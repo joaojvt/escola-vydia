@@ -2,7 +2,9 @@
   <div>
     <v-card>
       <v-card-title>
-        <v-btn color="teal" dark @click="goToCreate"> Novo </v-btn>
+        <router-link to="/create-student">
+          <v-btn color="teal" id="new-student-btn" dark> Novo </v-btn>
+        </router-link>
 
         <v-spacer></v-spacer>
 
@@ -46,14 +48,28 @@
                   mdi-delete
                 </v-icon>
               </template>
-              <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize"> Reset </v-btn>
-              </template>
             </v-data-table>
           </div>
         </v-row>
       </v-container>
     </v-card>
+    <v-dialog v-model="dialogDelete" max-width="500px">
+      <v-card>
+        <v-card-title class="text-h5"
+          >Tem certeza que quer apagar esse aluno?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="closeDelete"
+            >Cancelar</v-btn
+          >
+          <v-btn color="red darken-1" text @click="deleteStudentConfirm"
+            >OK</v-btn
+          >
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -63,7 +79,8 @@ export default {
 
   data: () => ({
     search: "",
-
+    dialogDelete: false,
+    dialogEdit: false,
     headers: [
       { text: "Matricula", value: "id" },
       { text: "Nome", value: "name" },
@@ -72,29 +89,25 @@ export default {
     ],
   }),
 
-  created() {
-    this.initialize();
+  computed: {
+    students() {
+      return this.$store.state.students;
+    },
   },
 
   methods: {
     editStudent(student) {
-      console.log("editar" + student.name);
+      this.$router.push(`/edit-student/${student.id}`)
     },
-    deleteStudent(student) {
-      console.log("deletar" + student.name);
+    deleteStudent() {
+      this.dialogDelete = true;
     },
-    initialize() {
-      this.students = [
-        {
-          id: 1,
-          name: "João Vitor da Silva",
-          email: "joao@email.com",
-          actions: "",
-        },
-      ];
+    closeDelete() {
+      this.dialogDelete = false;
     },
-    goToCreate() {
-      this.$router.push("/create-student");
+    deleteStudentConfirm(student) {
+      this.dialogDelete = false;
+      this.$store.commit("deleteStudentConfirm", student);
     },
   },
 };

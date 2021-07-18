@@ -48,13 +48,15 @@ export default {
       ["mdi-file-outline", "Provas", "/exams"],
     ],
   }),
-  beforeMount:function(){
+  beforeMount: function(){
+    this.page = this.$route.name
+  },
+  updated: function(){
     this.page = this.$route.name
   },
   methods: {
     goTo: function (namePage, route) {
       if (this.$route.path !== route) {
-        this.page = namePage;
         this.$router.push(route);
       }
     },

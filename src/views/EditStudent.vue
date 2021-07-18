@@ -6,13 +6,13 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
               <v-text-field
-                v-model="name"
+                v-model="student.name"
                 label="Nome"
                 :rules="nameRules"
                 required
               ></v-text-field>
               <v-text-field
-                v-model="email"
+                v-model="student.email"
                 :rules="emailRules"
                 label="Email"
                 required
@@ -23,7 +23,7 @@
                   color="success"
                   class="mr-4"
                   elevation="0"
-                  @click="createStudent"
+                  @click="updateStudent(student)"
                 >
                   Gravar
                 </v-btn>
@@ -53,41 +53,51 @@
 
 <script>
 export default {
-  name: "create-student",
+  name: "edit-student",
   data: () => ({
+    id: null,
     valid: false,
-    name: "",
     nameRules: [
       (value) => !!value || "Obrigatório.",
       (value) => (value && value.length >= 3) || "Min 3 caracteres",
     ],
-    email: "",
     emailRules: [
       (value) => !!value || "Obrigatório.",
       (value) =>
         /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]+)$/i.test(value) ||
         "Email inválido",
     ],
+    student: {
+      id: null,
+      name: '',
+      email: '',
+    }
   }),
   methods: {
-    createStudent(event) {
-      event.preventDefault;
+    updateStudent(student) {
       this.$refs.form.validate();
-
       if (!this.valid) return;
 
-      const student = {
-        name: this.name,
-        email: this.email,
-      };
+      const newStudent = {
+        id : student.id,
+        name: student.name,
+        email: student.email
+      }
 
-      this.$store.commit("addStudent", { student });
+      this.$store.commit("editStudent", { newStudent });
       this.$refs.form.reset();
       this.$router.push("/students");
     },
     reset() {
       this.$refs.form.reset();
     },
+    init(){
+      const id = parseInt(this.$route.params.id, 10)
+      this.student = this.$store.getters.getStudentById(id)
+    }
+  },
+  created(){
+    this.init()
   },
 };
 </script>
