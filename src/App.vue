@@ -3,8 +3,8 @@
     <v-navigation-drawer v-model="drawer" app dark color="grey darken-3">
       <v-divider></v-divider>
 
-      <v-list>
-        <v-list-item 
+      <v-list nav>
+        <v-list-item
           v-for="([icon, pageName, route], i) in links"
           :key="i"
           @click="goTo(pageName, route)"
@@ -14,9 +14,8 @@
             <v-icon v-text="icon"></v-icon>
           </v-list-item-icon>
 
-
           <v-list-item-content>
-              <v-list-item-title v-text="pageName"></v-list-item-title>
+            <v-list-item-title v-text="pageName"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -49,12 +48,15 @@ export default {
       ["mdi-file-outline", "Provas", "/exams"],
     ],
   }),
+  beforeMount:function(){
+    this.page = this.$route.name
+  },
   methods: {
     goTo: function (namePage, route) {
-      if (this.$route.path !== route){
+      if (this.$route.path !== route) {
         this.page = namePage;
-        this.$router.push(route)
-      } 
+        this.$router.push(route);
+      }
     },
   },
 };

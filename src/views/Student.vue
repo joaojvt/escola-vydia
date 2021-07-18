@@ -1,62 +1,100 @@
 <template>
   <div>
-    <v-from ref="form" v-model="valid" lazy-validation>
+    <v-card>
+      <v-card-title>
+        <v-btn color="teal" dark @click="goToCreate"> Novo </v-btn>
+
+        <v-spacer></v-spacer>
+
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          class="shrink"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+
       <v-container>
-        <v-text-field
-          v-model="name"
-          label="Nome"
-          :rules="nameRules"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="Email"
-          required
-        ></v-text-field>
-        <v-btn
-          :disabled="!valid"
-          color="success"
-          class="mr-4"
-          elevation="0"
-          @click="validate"
-        >
-          Gravar
-        </v-btn>
-        <v-btn class="mr-4" @click="reset" elevation="0" color="indigo" dark>
-          limpar
-        </v-btn>
+        <v-row>
+          <div class="col-12">
+            <v-data-table
+              :headers="headers"
+              :items="students"
+              :items-per-page="5"
+              :search="search"
+              class="elevation-0"
+            >
+              <template v-slot:item.actions="{ item }">
+                <v-icon
+                  small
+                  color="primary"
+                  class="mr-2"
+                  title="Editar"
+                  @click="editStudent(item)"
+                >
+                  mdi-pencil
+                </v-icon>
+                <v-icon
+                  small
+                  class="ml-2"
+                  title="Apagar"
+                  color="red"
+                  @click="deleteStudent(item)"
+                >
+                  mdi-delete
+                </v-icon>
+              </template>
+              <template v-slot:no-data>
+                <v-btn color="primary" @click="initialize"> Reset </v-btn>
+              </template>
+            </v-data-table>
+          </div>
+        </v-row>
       </v-container>
-    </v-from>
+    </v-card>
   </div>
 </template>
 
 <script>
 export default {
+  components: {},
+
   data: () => ({
-    valid: true,
-    name: "",
-    nameRules: [
-      (value) => !!value || "Obrigatório.",
-      (value) => (value && value.length >= 3) || "Min 3 characters",
-    ],
-    email: "",
-    emailRules: [
-      (value) => !!value || "Obrigatório.",
-      (value) =>
-        /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.?([a-z]+)$/i.test(value) ||
-        "Email inválido",
+    search: "",
+
+    headers: [
+      { text: "Matricula", value: "id" },
+      { text: "Nome", value: "name" },
+      { text: "Email", value: "email" },
+      { text: "Ações", value: "actions", sortable: false },
     ],
   }),
+
+  created() {
+    this.initialize();
+  },
+
   methods: {
-    validate() {
-      this.$refs.form.validate();
+    editStudent(student) {
+      console.log("editar" + student.name);
     },
-    reset() {
-      this.$refs.form.reset();
+    deleteStudent(student) {
+      console.log("deletar" + student.name);
     },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+    initialize() {
+      this.students = [
+        {
+          id: 1,
+          name: "João Vitor da Silva",
+          email: "joao@email.com",
+          actions: "",
+        },
+      ];
+    },
+    goToCreate() {
+      this.$router.push("/create-student");
     },
   },
 };
