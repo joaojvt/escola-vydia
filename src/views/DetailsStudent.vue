@@ -1,7 +1,15 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>{{student.name}}</v-card-title>
+      <v-card-title>
+        {{student.name}}
+
+        <v-spacer></v-spacer>
+
+        <router-link to="/students">
+          <v-btn color="teal" dark> Voltar </v-btn>
+        </router-link>
+      </v-card-title>
 
       <v-card-text>
         <h3>Provas</h3>
