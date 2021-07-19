@@ -117,7 +117,7 @@ export default new Vuex.Store({
     getStudentById: state => id => state.students.find(student => student.id === id),
     getClassById: state => id => state.classes.find(classe => classe.id === id),
     getExamById: state => id => state.exams.find(exam => exam.id === id),
-    getStudentExams: state => id => state.exams.filter(student => student.id === id),
+    getStudentExams: state => id => state.exams.filter(exam => exam.student.id === id),
     getStudentClasses: state => id => {
       const studentExams = state.exams.filter(exam => id === exam.student.id)
 
