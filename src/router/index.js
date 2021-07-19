@@ -10,6 +10,7 @@ import EditClass from '@/views/EditClass.vue'
 import Exams from '@/views/Exams.vue'
 import CreateExam from '@/views/CreateExam.vue'
 import EditExam from '@/views/EditExam.vue'
+import DetailsStudent from '@/views/DetailsStudent.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/edit-student/:id',
     name: 'Editar aluno',
     component: EditStudent
+  },
+  {
+    path: '/details-student/:id',
+    name: 'Detalhes aluno',
+    component: DetailsStudent
   },
   {
     path: '/classes',

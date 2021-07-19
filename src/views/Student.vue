@@ -32,7 +32,6 @@
                 <v-icon
                   small
                   color="primary"
-                  class="mr-2"
                   title="Editar"
                   @click="editStudent(item)"
                 >
@@ -40,12 +39,20 @@
                 </v-icon>
                 <v-icon
                   small
-                  class="ml-2"
+                  class="mx-2"
                   title="Apagar"
                   color="red"
                   @click="deleteStudent(item)"
                 >
                   mdi-delete
+                </v-icon>
+                <v-icon
+                  small
+                  title="Apagar"
+                  color="secondary"
+                  @click="goToDetails(item)"
+                >
+                  mdi-eye
                 </v-icon>
               </template>
             </v-data-table>
@@ -107,6 +114,9 @@ export default {
     deleteStudentConfirm(student) {
       this.dialogDelete = false;
       this.$store.commit("deleteStudentConfirm", student);
+    },
+    goToDetails(student) {
+      this.$router.push(`/details-student/${student.id}`)
     },
   },
 };
